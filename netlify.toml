@@ -1,0 +1,8 @@
+[build]
+  command="ng build"
+  publish="dist/arvan-cloud-frontend-challange"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
