@@ -12,6 +12,7 @@
 
 .was-validated .form-control:valid {
   border-color: #fff;
+  box-shadow: none;
 }
 
 .register-section {
@@ -21,4 +22,8 @@
 h1 {
   color: #707070;
   text-align: center;
+}
+
+.register-section strong {
+  cursor: pointer;
 }

@@ -1,20 +1,71 @@
 <div class="container">
-  <form class="was-validated">
+  <form class="was-validated" [formGroup]="loginForm" (ngSubmit)="login()">
     <h1 class="display-1">LOGIN</h1>
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" />
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+        [ngClass]="
+          (loginForm.controls.email.touched ||
+            loginForm.controls.email.dirty) &&
+          loginForm.controls.email.hasError('required')
+            ? 'is-invalid'
+            : '' || loginForm.controls.email.hasError('email')
+            ? 'is-invalid'
+            : ''
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          loginForm.controls.email.hasError("required")
+            ? " Email is required"
+            : ""
+        }}
+        {{
+          loginForm.controls.email.hasError("email") ? " Enter Valid Email" : ""
+        }}
+      </div>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password" required />
-      <div class="invalid-feedback">Required field</div>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+        [ngClass]="
+          (loginForm.controls.password.touched ||
+            loginForm.controls.password.dirty) &&
+          loginForm.controls.password.hasError('required')
+            ? 'is-invalid'
+            : ''
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          loginForm.controls.password.hasError("required")
+            ? " password is required"
+            : ""
+        }}
+      </div>
     </div>
     <div class="d-grid gap-2">
-      <button class="btn btn-primary" type="button">Login</button>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!loginForm.valid"
+      >
+        Login
+      </button>
     </div>
     <div class="register-section">
-      <p>Don't have account? <strong>Register Now</strong></p>
+      <p>
+        Don't have account?
+        <strong (click)="goToRegister()">Register Now</strong>
+      </p>
     </div>
   </form>
 </div>
