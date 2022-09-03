@@ -3,14 +3,5 @@
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
-body {
-  font-family: HelveticaNeue;
-}
-
-#toast-container > div.toast-error {
-  background-color: #e7cecd;
-  color: #9f4f48;
-  background-image: none;
-  min-width: 450px;
-  box-shadow: none;
-}
+@import "./assets/scss/general.scss";
+@import "./assets/scss/customize.scss";

@@ -2,28 +2,19 @@
   max-width: 450px;
   background-color: #eceeef;
   padding: 20px;
-  margin-top: 20%;
+  margin-top: 10%;
 }
 
-.was-validated .form-control:invalid,
-.was-validated .form-control:valid {
-  background-image: none;
-}
-
-.was-validated .form-control:valid {
-  border-color: #fff;
-  box-shadow: none;
-}
-
-.register-section {
-  padding-left: 15px;
-  margin-top: 20px;
-}
 h1 {
   color: #707070;
   text-align: center;
 }
 
-.register-section strong {
+.footer-section {
+  padding-left: 15px;
+  margin-top: 20px;
+}
+
+.footer-section strong {
   cursor: pointer;
 }

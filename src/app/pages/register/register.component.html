@@ -1,1 +1,81 @@
-<p>register works!</p>
+<div class="container">
+  <form class="was-validated" [formGroup]="form" (ngSubmit)="register()">
+    <h1 class="display-1">Register</h1>
+    <div class="mb-3">
+      <label for="username" class="form-label">User</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        formControlName="username"
+        [ngClass]="
+          (form.controls.username.touched || form.controls.username.dirty) &&
+          form.controls.username.hasError('required')
+            ? 'is-invalid'
+            : ''
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.controls.username.hasError("required") ? " User is required" : ""
+        }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+        [ngClass]="
+          (form.controls.email.touched || form.controls.email.dirty) &&
+          form.controls.email.hasError('required')
+            ? 'is-invalid'
+            : '' || form.controls.email.hasError('email')
+            ? 'is-invalid'
+            : ''
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.controls.email.hasError("required") ? " Email is required" : ""
+        }}
+        {{ form.controls.email.hasError("email") ? " Enter Valid Email" : "" }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+        [ngClass]="
+          (form.controls.password.touched || form.controls.password.dirty) &&
+          form.controls.password.hasError('required')
+            ? 'is-invalid'
+            : ''
+        "
+      />
+      <div class="invalid-feedback">
+        {{
+          form.controls.password.hasError("required")
+            ? " password is required"
+            : ""
+        }}
+      </div>
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" type="submit" [disabled]="!form.valid">
+        Register
+      </button>
+    </div>
+    <div class="footer-section">
+      <p>
+        Already Registered?
+        <strong (click)="goToLogin()">Login</strong>
+      </p>
+    </div>
+  </form>
+</div>

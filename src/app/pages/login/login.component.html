@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="was-validated" [formGroup]="loginForm" (ngSubmit)="login()">
+  <form class="was-validated" [formGroup]="form" (ngSubmit)="login()">
     <h1 class="display-1">LOGIN</h1>
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
@@ -9,23 +9,23 @@
         id="email"
         formControlName="email"
         [ngClass]="
-          (loginForm.controls.email.touched ||
-            loginForm.controls.email.dirty) &&
-          loginForm.controls.email.hasError('required')
+          (form.controls.email.touched ||
+            form.controls.email.dirty) &&
+          form.controls.email.hasError('required')
             ? 'is-invalid'
-            : '' || loginForm.controls.email.hasError('email')
+            : '' || form.controls.email.hasError('email')
             ? 'is-invalid'
             : ''
         "
       />
       <div class="invalid-feedback">
         {{
-          loginForm.controls.email.hasError("required")
+          form.controls.email.hasError("required")
             ? " Email is required"
             : ""
         }}
         {{
-          loginForm.controls.email.hasError("email") ? " Enter Valid Email" : ""
+          form.controls.email.hasError("email") ? " Enter Valid Email" : ""
         }}
       </div>
     </div>
@@ -37,16 +37,16 @@
         id="password"
         formControlName="password"
         [ngClass]="
-          (loginForm.controls.password.touched ||
-            loginForm.controls.password.dirty) &&
-          loginForm.controls.password.hasError('required')
+          (form.controls.password.touched ||
+            form.controls.password.dirty) &&
+          form.controls.password.hasError('required')
             ? 'is-invalid'
             : ''
         "
       />
       <div class="invalid-feedback">
         {{
-          loginForm.controls.password.hasError("required")
+          form.controls.password.hasError("required")
             ? " password is required"
             : ""
         }}
@@ -56,12 +56,12 @@
       <button
         class="btn btn-primary"
         type="submit"
-        [disabled]="!loginForm.valid"
+        [disabled]="!form.valid"
       >
         Login
       </button>
     </div>
-    <div class="register-section">
+    <div class="footer-section">
       <p>
         Don't have account?
         <strong (click)="goToRegister()">Register Now</strong>

@@ -1,11 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { LoginDto } from 'src/app/dto';
 import { AuthService, NavigationService } from 'src/app/services';
 
@@ -14,8 +9,9 @@ import { AuthService, NavigationService } from 'src/app/services';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-  loginForm = this.fb.group({
+export class LoginComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
+  form = this.fb.group({
     email: ['', [Validators.email]],
     password: ['', Validators.required],
   });
@@ -27,15 +23,24 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   login() {
-    if (this.loginForm.valid) {
-      const dto: LoginDto = { user: this.loginForm.getRawValue() };
-      this.auth.Login(dto).subscribe((result) => {
-        debugger;
-      });
+    if (this.form.valid) {
+      const dto: LoginDto = { user: this.form.getRawValue() };
+      this.auth
+        .Login(dto)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((result) => {
+          this.navigation.GoToDashboard();
+        });
     }
   }
+
   goToRegister() {
-    this.navigation.GoToRegisterPage();
+    this.navigation.GoToRegister();
   }
 }

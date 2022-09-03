@@ -14,6 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private notif: NotificationService) {}
 
   getEerorMessage(errors: any): string {
+    //TODO: list of error
     return `${Object.keys(errors)[0]} ${errors[Object.keys(errors)[0]]}`;
   }
 
@@ -23,7 +24,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        debugger
         this.notif.OpenError(this.getEerorMessage(error.error.errors),'Login Faild!');
         return throwError(() => error);
       })
