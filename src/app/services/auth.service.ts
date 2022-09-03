@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class AuthService {
-  userInfo = new BehaviorSubject({});
+  userInfo$ = new BehaviorSubject({});
   jwtHelper = new JwtHelperService();
   access_token = '';
   isLoggedIn = false;
@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   private loadUserInfo() {
-    if (this.userInfo.getValue()) {
+    if (this.userInfo$.getValue()) {
       const access_token = this.GetToken();
       if (access_token) {
         this.setUser(access_token);
@@ -41,7 +41,7 @@ export class AuthService {
     if (!this.jwtHelper.isTokenExpired(access_token)) {
       this.isLoggedIn = true;
       localStorage.setItem('access_token', access_token);
-      this.userInfo.next(this.jwtHelper.decodeToken(access_token));
+      this.userInfo$.next(this.jwtHelper.decodeToken(access_token));
     }
   }
 
@@ -50,9 +50,16 @@ export class AuthService {
       .post<UserDto>('users/login', dto)
       .pipe(tap((data) => this.setUser(data.user.token)));
   }
+
   Register(dto: LoginDto) {
     return this.api
       .post<UserDto>('users', dto)
       .pipe(tap((data) => this.setUser(data.user.token)));
+  }
+
+  Logout() {
+    this.RemoveToken();
+    this.userInfo$.next({});
+    this.isLoggedIn = false;
   }
 }

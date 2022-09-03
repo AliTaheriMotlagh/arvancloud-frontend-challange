@@ -13,9 +13,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { ErrorInterceptor } from './interceptors';
+import { AuthInterceptor, ErrorInterceptor } from './interceptors';
 import { environment } from 'src/environments/environment';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HeaderComponent } from './components/header/header.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -28,6 +29,7 @@ export function tokenGetter() {
     RegisterComponent,
     PageNotFoundComponent,
     DashboardComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,11 @@ export function tokenGetter() {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],
