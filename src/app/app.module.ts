@@ -17,6 +17,8 @@ import { AuthInterceptor, ErrorInterceptor } from './interceptors';
 import { environment } from 'src/environments/environment';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
+import { AllArticlesComponent } from './pages/all-articles/all-articles.component';
+import { ArticleComponent } from './pages/article/article.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -30,6 +32,8 @@ export function tokenGetter() {
     PageNotFoundComponent,
     DashboardComponent,
     HeaderComponent,
+    AllArticlesComponent,
+    ArticleComponent,
   ],
   imports: [
     BrowserModule,

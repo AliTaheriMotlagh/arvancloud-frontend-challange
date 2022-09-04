@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  links = [
+    { title: 'All Articles', link: 'articles' },
+    { title: 'New Article', link: 'articles/create' },
+  ];
+
+  constructor(public route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }

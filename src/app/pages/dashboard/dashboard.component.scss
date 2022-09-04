@@ -1,0 +1,21 @@
+#sidebar {
+  width: 250px;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: #1c7cd5;
+  color: #fff;
+}
+
+div > div:nth-child(1) {
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+}
+
+.nav-pills .nav-link.active{
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav-pills .nav-link{
+  color: #fff;
+}
