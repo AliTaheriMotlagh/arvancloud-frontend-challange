@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let newReq = request.clone({
       headers: request.headers.set(
         'Authorization',
-        'bearer ' + this.auth.GetToken()
+        'Token ' + this.auth.GetToken()
       ),
     });
     return next.handle(newReq);

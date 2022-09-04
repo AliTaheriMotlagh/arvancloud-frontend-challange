@@ -6,6 +6,14 @@
   box-shadow: none;
 }
 
+#toast-container > div.toast-success {
+  background-color: #d5e6c7;
+  color: #4b713d;
+  background-image: none;
+  min-width: 450px;
+  box-shadow: none;
+}
+
 .was-validated .form-control:invalid,
 .was-validated .form-control:valid {
   background-image: none;

@@ -11,4 +11,8 @@ export class ArticleService {
   AllArticles() {
     return this.api.get<AllArticlesDto>('articles');
   }
+
+  DeleteArTicle(slug: string) {
+    return this.api.delete(`articles/${slug}`);
+  }
 }

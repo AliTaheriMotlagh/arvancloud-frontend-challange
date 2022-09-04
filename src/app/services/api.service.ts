@@ -19,4 +19,8 @@ export class ApiService {
   get<T>(endpoint: string, params?: any) {
     return this.http.get<T>(`${environment.apiUrl}/${endpoint}`, { params });
   }
+
+  delete<T>(endpoint: string, params?: any) {
+    return this.http.delete<T>(`${environment.apiUrl}/${endpoint}`, { params });
+  }
 }

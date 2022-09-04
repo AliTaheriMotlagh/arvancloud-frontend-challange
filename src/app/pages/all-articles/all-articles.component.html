@@ -44,7 +44,12 @@
               </button>
               <div ngbDropdownMenu aria-labelledby="action">
                 <button ngbDropdownItem>Edit</button>
-                <button ngbDropdownItem>Delete</button>
+                <button
+                  ngbDropdownItem
+                  (click)="deleteHandler(confrimModal, article.slug)"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </td>
@@ -57,9 +62,30 @@
         [collectionSize]="collectionSize"
         [(page)]="page"
         [pageSize]="pageSize"
-        (pageChange)="refreshCountries()"
+        (pageChange)="refreshArticles()"
       >
       </ngb-pagination>
     </div>
   </div>
 </div>
+
+<ng-template #confrimModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Article</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure to delete Article?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modal.dismiss()">No</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close()">
+      Yes
+    </button>
+  </div>
+</ng-template>

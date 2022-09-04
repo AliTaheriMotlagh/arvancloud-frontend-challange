@@ -24,7 +24,17 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.notif.OpenError(this.getEerorMessage(error.error.errors),'Login Faild!');
+        if (error.error.errors) {
+          this.notif.OpenError(
+            this.getEerorMessage(error.error.errors),
+            error.error.status
+          );
+        }
+
+        if (error.error.message) {
+          this.notif.OpenError(error.error.message, error.error.status);
+        }
+
         return throwError(() => error);
       })
     );
