@@ -1,1 +1,65 @@
-<p>all-articles works!</p>
+<div class="d-flex">
+  <div class="p-2 flex-grow-1">
+    <h4>All Posts</h4>
+
+    <table class="table">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Tags</th>
+          <th scope="col">Excerpt</th>
+          <th scope="col">Created</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let article of articles; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ article.title }}
+          </td>
+          <td>
+            {{ article.author.username }}
+          </td>
+          <td>
+            {{ article.tagList }}
+          </td>
+          <td>
+            <span>{{ article.body | truncateText }}</span>
+          </td>
+          <td>
+            {{ article.createdAt | date }}
+          </td>
+          <td>
+            <div ngbDropdown class="d-inline-block">
+              <button
+                type="button"
+                class="btn btn-info"
+                id="action"
+                ngbDropdownToggle
+              >
+                ...
+              </button>
+              <div ngbDropdownMenu aria-labelledby="action">
+                <button ngbDropdownItem>Edit</button>
+                <button ngbDropdownItem>Delete</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center p-2">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="refreshCountries()"
+      >
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

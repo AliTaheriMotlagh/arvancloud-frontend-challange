@@ -13,6 +13,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   access_token = '';
   isLoggedIn = false;
+
   constructor(private api: ApiService) {
     this.loadUserInfo();
   }
@@ -25,6 +26,7 @@ export class AuthService {
       }
     }
   }
+
   isAuthenticated() {
     return this.isLoggedIn;
   }

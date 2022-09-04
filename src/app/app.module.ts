@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
@@ -19,6 +19,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AllArticlesComponent } from './pages/all-articles/all-articles.component';
 import { ArticleComponent } from './pages/article/article.component';
+import { TruncateTextPipe } from './pipes';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -34,6 +35,7 @@ export function tokenGetter() {
     HeaderComponent,
     AllArticlesComponent,
     ArticleComponent,
+    TruncateTextPipe,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +52,7 @@ export function tokenGetter() {
         disallowedRoutes: [],
       },
     }),
+    FormsModule,
   ],
   providers: [
     {
