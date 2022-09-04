@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AllArticlesDto } from '../dto';
+import { AllArticlesDto, PaginationDto } from '../dto';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -8,8 +8,8 @@ import { ApiService } from './api.service';
 export class ArticleService {
   constructor(private api: ApiService) {}
 
-  AllArticles() {
-    return this.api.get<AllArticlesDto>('articles');
+  AllArticles(query: PaginationDto) {
+    return this.api.get<AllArticlesDto>('articles', query);
   }
 
   DeleteArTicle(slug: string) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ArticleDto } from 'src/app/dto';
+import { ArticleDto, PaginationDto } from 'src/app/dto';
 import { ArticleService, NotificationService } from 'src/app/services';
 
 @Component({
@@ -26,7 +26,9 @@ export class AllArticlesComponent implements OnInit {
   }
 
   refreshArticles() {
-    this.articleService.AllArticles().subscribe((result) => {
+    const query: PaginationDto = { limit: 20 };
+    this.articleService.AllArticles(query).subscribe((result) => {
+      debugger;
       this.collectionSize = result.articlesCount;
       this.articles = result.articles
         .map((article, i) => ({
