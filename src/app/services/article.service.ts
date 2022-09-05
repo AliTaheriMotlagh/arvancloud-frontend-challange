@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AllArticlesDto, PaginationDto } from '../dto';
+import { AllArticlesDto, AllTagsDto, PaginationDto } from '../dto';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -14,5 +14,9 @@ export class ArticleService {
 
   DeleteArTicle(slug: string) {
     return this.api.delete(`articles/${slug}`);
+  }
+
+  AllTags() {
+    return this.api.get<AllTagsDto>('tags');
   }
 }

@@ -1,61 +1,62 @@
 <div class="d-flex">
   <div class="p-2 flex-grow-1">
     <h4>All Posts</h4>
-
-    <table class="table">
-      <thead>
-        <tr class="table-secondary">
-          <th scope="col">#</th>
-          <th scope="col">Title</th>
-          <th scope="col">Author</th>
-          <th scope="col">Tags</th>
-          <th scope="col">Excerpt</th>
-          <th scope="col">Created</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let article of articles; index as i">
-          <th scope="row">{{ (page - 1) * pageSize + i + 1 }}</th>
-          <td>
-            {{ article.title }}
-          </td>
-          <td>
-            {{ article.author.username }}
-          </td>
-          <td>
-            {{ article.tagList }}
-          </td>
-          <td>
-            <span>{{ article.body | truncateText }}</span>
-          </td>
-          <td>
-            {{ article.createdAt | date }}
-          </td>
-          <td>
-            <div ngbDropdown class="d-inline-block">
-              <button
-                type="button"
-                class="btn btn-info"
-                id="action"
-                ngbDropdownToggle
-              >
-                ...
-              </button>
-              <div ngbDropdownMenu aria-labelledby="action">
-                <button ngbDropdownItem>Edit</button>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Excerpt</th>
+            <th scope="col">Created</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of articles; index as i">
+            <th scope="row">{{ (page - 1) * pageSize + i + 1 }}</th>
+            <td>
+              {{ article.title }}
+            </td>
+            <td>
+              {{ article.author.username }}
+            </td>
+            <td>
+              {{ article.tagList }}
+            </td>
+            <td>
+              <span>{{ article.body | truncateText }}</span>
+            </td>
+            <td>
+              {{ article.createdAt | date }}
+            </td>
+            <td>
+              <div ngbDropdown class="d-inline-block">
                 <button
-                  ngbDropdownItem
-                  (click)="deleteHandler(confrimModal, article.slug)"
+                  type="button"
+                  class="btn btn-info"
+                  id="action"
+                  ngbDropdownToggle
                 >
-                  Delete
+                  ...
                 </button>
+                <div ngbDropdownMenu aria-labelledby="action">
+                  <button ngbDropdownItem>Edit</button>
+                  <button
+                    ngbDropdownItem
+                    (click)="deleteHandler(confrimModal, article.slug)"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="d-flex justify-content-center p-2">
       <ngb-pagination
@@ -83,7 +84,7 @@
     <p>Are you sure to delete Article?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn" (click)="modal.dismiss()">No</button>
+    <button type="button" class="btn" (click)="modal.dismiss()" ngbAutofocus>No</button>
     <button type="button" class="btn btn-danger" (click)="modal.close()">
       Yes
     </button>

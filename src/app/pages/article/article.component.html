@@ -1,1 +1,87 @@
-<p>article works!</p>
+<div class="d-flex">
+  <div class="p-2 flex-grow-1">
+    <h4>New Article</h4>
+    <div class="d-flex">
+      <div class="p-2 flex-grow-1">
+        <form class="was-validated" [formGroup]="form" (ngSubmit)="save()">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              formControlName="title"
+              placeholder="Title"
+              [ngClass]="
+                (form.controls.title.touched || form.controls.title.dirty) &&
+                form.controls.title.hasError('required')
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <div class="invalid-feedback">
+              {{
+                form.controls.title.hasError("required") ? "Required field" : ""
+              }}
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              formControlName="description"
+              placeholder="Description"
+              [ngClass]="
+                (form.controls.description.touched ||
+                  form.controls.description.dirty) &&
+                form.controls.description.hasError('required')
+                  ? 'is-invalid'
+                  : ''
+              "
+            />
+            <div class="invalid-feedback">
+              {{
+                form.controls.description.hasError("required")
+                  ? "Required field"
+                  : ""
+              }}
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="body" class="form-label">Body</label>
+            <textarea
+              rows="6"
+              class="form-control"
+              id="body"
+              formControlName="body"
+              placeholder="Body"
+              [ngClass]="
+                (form.controls.body.touched || form.controls.body.dirty) &&
+                form.controls.body.hasError('required')
+                  ? 'is-invalid'
+                  : ''
+              "
+            ></textarea>
+            <div class="invalid-feedback">
+              {{
+                form.controls.body.hasError("required") ? "Required field" : ""
+              }}
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+      <div class="p-2">
+        <app-tag-manager (tagList)="tagListUpdate($event)"></app-tag-manager>
+      </div>
+    </div>
+  </div>
+</div>

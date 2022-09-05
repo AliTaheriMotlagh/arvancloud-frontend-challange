@@ -17,7 +17,7 @@
       />
       <div class="invalid-feedback">
         {{
-          form.controls.username.hasError("required") ? " User is required" : ""
+          form.controls.username.hasError("required") ? "Required field" : ""
         }}
       </div>
     </div>
@@ -39,7 +39,7 @@
       />
       <div class="invalid-feedback">
         {{
-          form.controls.email.hasError("required") ? " Email is required" : ""
+          form.controls.email.hasError("required") ? "Required field" : ""
         }}
         {{ form.controls.email.hasError("email") ? " Enter Valid Email" : "" }}
       </div>
@@ -61,7 +61,7 @@
       <div class="invalid-feedback">
         {{
           form.controls.password.hasError("required")
-            ? " password is required"
+            ? "Required field"
             : ""
         }}
       </div>

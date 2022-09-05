@@ -1,0 +1,37 @@
+<form
+  class="was-validated tag-form"
+  [formGroup]="form"
+  (ngSubmit)="addNewTag()"
+>
+  <div class="mb-3">
+    <label for="newTag" class="form-label">Tags</label>
+    <input
+      type="text"
+      class="form-control"
+      id="newTag"
+      formControlName="newTag"
+      placeholder="New tag"
+      [ngClass]="
+        (form.controls.newTag.touched || form.controls.newTag.dirty) &&
+        form.controls.newTag.hasError('required')
+          ? 'is-invalid'
+          : ''
+      "
+    />
+    <div class="invalid-feedback">
+      {{ form.controls.newTag.hasError("required") ? "Required field" : "" }}
+    </div>
+  </div>
+</form>
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let item of list">
+    <input
+      class="form-check-input me-1"
+      type="checkbox"
+      [id]="item"
+      (click)="tagClickHandler(item)"
+      [checked]="isSelect(item)"
+    />
+    <label class="form-check-label" [for]="item">{{ item }}</label>
+  </li>
+</ul>

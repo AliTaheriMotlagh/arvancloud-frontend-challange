@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ArticleDto, PaginationDto } from 'src/app/dto';
 import { ArticleService, NotificationService } from 'src/app/services';
@@ -9,7 +10,8 @@ import { ArticleService, NotificationService } from 'src/app/services';
   templateUrl: './all-articles.component.html',
   styleUrls: ['./all-articles.component.scss'],
 })
-export class AllArticlesComponent implements OnInit {
+export class AllArticlesComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
   page = 1;
   pageSize = 10;
   collectionSize = 0;
@@ -24,22 +26,29 @@ export class AllArticlesComponent implements OnInit {
   ngOnInit(): void {
     this.refreshArticles();
   }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
   refreshArticles() {
     const query: PaginationDto = { limit: 20 };
-    this.articleService.AllArticles(query).subscribe((result) => {
-      debugger;
-      this.collectionSize = result.articlesCount;
-      this.articles = result.articles
-        .map((article, i) => ({
-          id: i + 1,
-          ...article,
-        }))
-        .slice(
-          (this.page - 1) * this.pageSize,
-          (this.page - 1) * this.pageSize + this.pageSize
-        );
-    });
+    this.articleService
+      .AllArticles(query)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((result) => {
+        this.collectionSize = result.articlesCount;
+        this.articles = result.articles
+          .map((article, i) => ({
+            id: i + 1,
+            ...article,
+          }))
+          .slice(
+            (this.page - 1) * this.pageSize,
+            (this.page - 1) * this.pageSize + this.pageSize
+          );
+        //TODO : Pagination with url and offset
+      });
   }
 
   deleteHandler(content: any, slug: string) {
@@ -54,9 +63,12 @@ export class AllArticlesComponent implements OnInit {
   }
 
   private deleteArticle(slug: string) {
-    this.articleService.DeleteArTicle(slug).subscribe((result) => {
-      this.notif.OpenSuccess('Article deleted successfuly');
-      this.articles = this.articles.filter((i) => i.slug !== slug);
-    });
+    this.articleService
+      .DeleteArTicle(slug)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((result) => {
+        this.notif.OpenSuccess('Article deleted successfuly');
+        this.articles = this.articles.filter((i) => i.slug !== slug);
+      });
   }
 }

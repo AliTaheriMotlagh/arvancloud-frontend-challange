@@ -20,6 +20,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AllArticlesComponent } from './pages/all-articles/all-articles.component';
 import { ArticleComponent } from './pages/article/article.component';
 import { TruncateTextPipe } from './pipes';
+import { TagManagerComponent } from './components/tag-manager/tag-manager.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -36,6 +37,7 @@ export function tokenGetter() {
     AllArticlesComponent,
     ArticleComponent,
     TruncateTextPipe,
+    TagManagerComponent,
   ],
   imports: [
     BrowserModule,

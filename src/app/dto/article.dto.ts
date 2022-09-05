@@ -1,3 +1,6 @@
+export interface AllTagsDto {
+  tags: string[];
+}
 export interface AllArticlesDto {
   articles: ArticleDto[];
   articlesCount: number;

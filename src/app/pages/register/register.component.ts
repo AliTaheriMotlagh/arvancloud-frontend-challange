@@ -12,7 +12,7 @@ import { AuthService, NavigationService } from 'src/app/services';
 export class RegisterComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   form = this.fb.group({
-    username: ['', Validators.required],
+    username: [''],
     email: ['', [Validators.email]],
     password: ['', Validators.required],
   });
