@@ -38,9 +38,7 @@
         "
       />
       <div class="invalid-feedback">
-        {{
-          form.controls.email.hasError("required") ? "Required field" : ""
-        }}
+        {{ form.controls.email.hasError("required") ? "Required field" : "" }}
         {{ form.controls.email.hasError("email") ? " Enter Valid Email" : "" }}
       </div>
     </div>
@@ -60,14 +58,21 @@
       />
       <div class="invalid-feedback">
         {{
-          form.controls.password.hasError("required")
-            ? "Required field"
-            : ""
+          form.controls.password.hasError("required") ? "Required field" : ""
         }}
       </div>
     </div>
     <div class="d-grid gap-2">
-      <button class="btn btn-primary" type="submit" [disabled]="!form.valid">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!form.valid || isLoading"
+      >
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          *ngIf="isLoading"
+        ></span>
         Register
       </button>
     </div>

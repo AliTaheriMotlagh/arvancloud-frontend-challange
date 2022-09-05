@@ -28,6 +28,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
   slug: string = '';
   data: ArticleDto | null = null;
 
+  isLoading = false;
+
   constructor(
     private fb: FormBuilder,
     private articleService: ArticleService,
@@ -59,6 +61,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   save() {
     if (this.form.valid) {
+      this.isLoading = true;
       const dto: CreateArticleDto = {
         article: {
           body: this.form.getRawValue().body!,
@@ -68,24 +71,45 @@ export class ArticleComponent implements OnInit, OnDestroy {
           slug: this.slug,
         },
       };
+
       if (this.isEdit) {
-        this.articleService
-          .UpdateArticles(dto)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe((result) => {
-            this.notif.OpenSuccess('Article update successfuly', 'Well Done!');
-            this.navigate.GoToDashboard();
-          });
+        this.updateArticle(dto);
       } else {
-        this.articleService
-          .CreateArticles(dto)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe((result) => {
-            this.notif.OpenSuccess('Article created successfuly', 'Well Done!');
-            this.navigate.GoToDashboard();
-          });
+        this.createArticle(dto);
       }
     }
+  }
+
+  createArticle(dto: CreateArticleDto) {
+    this.articleService
+      .CreateArticles(dto)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (result) => {
+          this.isLoading = false;
+          this.notif.OpenSuccess('Article created successfuly', 'Well Done!');
+          this.navigate.GoToDashboard();
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+  }
+
+  updateArticle(dto: CreateArticleDto) {
+    this.articleService
+      .UpdateArticles(dto)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (result) => {
+          this.isLoading = false;
+          this.notif.OpenSuccess('Article update successfuly', 'Well Done!');
+          this.navigate.GoToDashboard();
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
   }
 
   tagListUpdate(result: string[]) {

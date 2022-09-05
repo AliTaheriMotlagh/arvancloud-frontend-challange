@@ -11,11 +11,14 @@ import { AuthService, NavigationService } from 'src/app/services';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
+
   form = this.fb.group({
     username: [''],
     email: ['', [Validators.email]],
     password: ['', Validators.required],
   });
+
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -31,13 +34,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   register() {
     if (this.form.valid) {
+      this.isLoading = true;
       const dto: RegisterDto = { user: this.form.getRawValue() };
       this.auth
         .Register(dto)
         .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((result) => {
-          this.navigation.GoToDashboard();
-        });
+        .subscribe(
+          (result) => {
+            this.isLoading = false;
+            this.navigation.GoToDashboard();
+          },
+          () => {
+            this.isLoading = false;
+          }
+        );
     }
   }
 

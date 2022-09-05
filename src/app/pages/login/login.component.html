@@ -9,8 +9,7 @@
         id="email"
         formControlName="email"
         [ngClass]="
-          (form.controls.email.touched ||
-            form.controls.email.dirty) &&
+          (form.controls.email.touched || form.controls.email.dirty) &&
           form.controls.email.hasError('required')
             ? 'is-invalid'
             : '' || form.controls.email.hasError('email')
@@ -19,14 +18,8 @@
         "
       />
       <div class="invalid-feedback">
-        {{
-          form.controls.email.hasError("required")
-            ? "Required field"
-            : ""
-        }}
-        {{
-          form.controls.email.hasError("email") ? " Enter Valid Email" : ""
-        }}
+        {{ form.controls.email.hasError("required") ? "Required field" : "" }}
+        {{ form.controls.email.hasError("email") ? " Enter Valid Email" : "" }}
       </div>
     </div>
     <div class="mb-3">
@@ -37,8 +30,7 @@
         id="password"
         formControlName="password"
         [ngClass]="
-          (form.controls.password.touched ||
-            form.controls.password.dirty) &&
+          (form.controls.password.touched || form.controls.password.dirty) &&
           form.controls.password.hasError('required')
             ? 'is-invalid'
             : ''
@@ -46,9 +38,7 @@
       />
       <div class="invalid-feedback">
         {{
-          form.controls.password.hasError("required")
-            ? "Required field"
-            : ""
+          form.controls.password.hasError("required") ? "Required field" : ""
         }}
       </div>
     </div>
@@ -56,8 +46,13 @@
       <button
         class="btn btn-primary"
         type="submit"
-        [disabled]="!form.valid"
+        [disabled]="!form.valid || isLoading"
       >
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          *ngIf="isLoading"
+        ></span>
         Login
       </button>
     </div>

@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     password: ['', Validators.required],
   });
 
+  isLoading = false;
+
   constructor(
     private fb: FormBuilder,
     private navigation: NavigationService,
@@ -30,13 +32,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.form.valid) {
+      this.isLoading = true;
       const dto: LoginDto = { user: this.form.getRawValue() };
       this.auth
         .Login(dto)
         .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((result) => {
-          this.navigation.GoToDashboard();
-        });
+        .subscribe(
+          (result) => {
+            this.isLoading = false;
+            this.navigation.GoToDashboard();
+          },
+          () => {
+            this.isLoading = false;
+          }
+        );
     }
   }
 

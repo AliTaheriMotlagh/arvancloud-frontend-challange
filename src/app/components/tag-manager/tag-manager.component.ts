@@ -56,6 +56,10 @@ export class TagManagerComponent implements OnInit, OnDestroy {
   addNewTag() {
     if (this.form.valid) {
       const newTag = this.form.getRawValue().newTag!;
+      if (!newTag.trim()) {
+        this.form.reset();
+        return;
+      }
       const isExist = this.list.find((i) => i == newTag);
       if (isExist) {
         this.form.reset();
