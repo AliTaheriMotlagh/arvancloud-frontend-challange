@@ -15,6 +15,7 @@ export interface CreateArticleDto {
 }
 
 export interface ArticleDto {
+  id?: number;
   slug?: string;
   title: string;
   description: string;

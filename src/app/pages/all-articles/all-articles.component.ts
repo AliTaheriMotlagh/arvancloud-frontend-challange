@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -26,12 +27,14 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private modalService: NgbModal,
     private notif: NotificationService,
-    private navigate: NavigationService
+    private navigate: NavigationService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loadArticles();
   }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
@@ -45,6 +48,7 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
         this.collectionSize = result.articlesCount;
         this.articles = result.articles;
+        this.page = +this.route.snapshot.params['page'] || 1;
         this.refreshPagination();
       });
   }
@@ -59,10 +63,15 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
+
+    this.navigate.GoToArticleByPage(this.page);
+    // TODO : page 1 = /articles and 2 api call
   }
 
+  goToPage(page: number) {}
+
   editHandler(slug: string) {
-    return this.navigate.GoToArticle(slug);
+    return this.navigate.GoToArticleBySlug(slug);
   }
 
   deleteHandler(content: any, slug: any) {
