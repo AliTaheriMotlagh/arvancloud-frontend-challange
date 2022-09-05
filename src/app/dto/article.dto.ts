@@ -6,21 +6,25 @@ export interface AllArticlesDto {
   articlesCount: number;
 }
 
+export interface ArticleBySlugDto {
+  article: ArticleDto;
+}
+
 export interface CreateArticleDto {
   article: ArticleDto;
 }
 
 export interface ArticleDto {
-  slug?: string | null;
-  title: string | null;
-  description: string | null;
-  body: string | null;
-  tagList: string[] | null;
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
-  favorited?: boolean | null;
-  favoritesCount?: Number | null;
-  author?: AuthorDto | null;
+  slug?: string;
+  title: string;
+  description: string;
+  body: string;
+  tagList: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  favorited?: boolean;
+  favoritesCount?: Number;
+  author?: AuthorDto;
 }
 
 export interface AuthorDto {

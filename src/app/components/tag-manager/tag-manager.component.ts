@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -24,6 +25,11 @@ export class TagManagerComponent implements OnInit, OnDestroy {
   list: string[] = [];
 
   @Output() tagList = new EventEmitter<string[]>();
+  @Input() set loadedTags(v: string[]) {
+    if (v) {
+      this.selectedTags = this.selectedTags.concat(v);
+    }
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -67,7 +73,7 @@ export class TagManagerComponent implements OnInit, OnDestroy {
     } else {
       this.selectedTags.push(tag);
     }
-    this.tagList.next(this.selectedTags);
+    this.tagList.emit(this.selectedTags);
   }
 
   isSelect(tag: string) {

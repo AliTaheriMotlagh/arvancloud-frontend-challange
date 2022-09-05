@@ -1,6 +1,7 @@
 <div class="d-flex">
   <div class="p-2 flex-grow-1">
-    <h4>New Article</h4>
+    <h4 *ngIf="!isEdit">New Article</h4>
+    <h4 *ngIf="isEdit">Edit Article</h4>
     <div class="d-flex">
       <div class="p-2 flex-grow-1">
         <form class="was-validated" [formGroup]="form" (ngSubmit)="save()">
@@ -80,7 +81,10 @@
         </form>
       </div>
       <div class="p-2">
-        <app-tag-manager (tagList)="tagListUpdate($event)"></app-tag-manager>
+        <app-tag-manager
+          (tagList)="tagListUpdate($event)"
+          [loadedTags]="data?.tagList!"
+        ></app-tag-manager>
       </div>
     </div>
   </div>

@@ -28,6 +28,11 @@ const routes: Routes = [
         component: ArticleComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'articles/edit/:slug',
+        component: ArticleComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 

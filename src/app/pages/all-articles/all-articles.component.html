@@ -21,7 +21,7 @@
               {{ article.title }}
             </td>
             <td>
-              {{ article.author.username }}
+              {{ article.author?.username }}
             </td>
             <td>
               {{ article.tagList }}
@@ -43,7 +43,7 @@
                   ...
                 </button>
                 <div ngbDropdownMenu aria-labelledby="action">
-                  <button ngbDropdownItem>Edit</button>
+                  <button ngbDropdownItem (click)="editHandler(article.slug!)">Edit</button>
                   <button
                     ngbDropdownItem
                     (click)="deleteHandler(confrimModal, article.slug)"
@@ -84,7 +84,9 @@
     <p>Are you sure to delete Article?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn" (click)="modal.dismiss()" ngbAutofocus>No</button>
+    <button type="button" class="btn" (click)="modal.dismiss()" ngbAutofocus>
+      No
+    </button>
     <button type="button" class="btn btn-danger" (click)="modal.close()">
       Yes
     </button>

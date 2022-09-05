@@ -16,4 +16,13 @@ export class NavigationService {
   GoToDashboard() {
     return this.router.navigate(['/', 'dashboard']);
   }
+  GoToArticle(slug: string) {
+    return this.router.navigate([
+      '/',
+      'dashboard',
+      'articles',
+      'edit',
+      `${slug}`,
+    ]);
+  }
 }

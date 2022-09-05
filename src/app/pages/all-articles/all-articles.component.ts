@@ -3,7 +3,11 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 
 import { ArticleDto, PaginationDto } from 'src/app/dto';
-import { ArticleService, NotificationService } from 'src/app/services';
+import {
+  ArticleService,
+  NavigationService,
+  NotificationService,
+} from 'src/app/services';
 
 @Component({
   selector: 'app-all-articles',
@@ -20,7 +24,8 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
   constructor(
     private articleService: ArticleService,
     private modalService: NgbModal,
-    private notif: NotificationService
+    private notif: NotificationService,
+    private navigate: NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +56,11 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteHandler(content: any, slug: string) {
+  editHandler(slug: string) {
+    return this.navigate.GoToArticle(slug);
+  }
+
+  deleteHandler(content: any, slug: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
