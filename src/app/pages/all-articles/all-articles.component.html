@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let article of articles; index as i">
+          <tr *ngFor="let article of datasource; index as i">
             <th scope="row">{{ (page - 1) * pageSize + i + 1 }}</th>
             <td>
               {{ article.title }}
@@ -43,7 +43,9 @@
                   ...
                 </button>
                 <div ngbDropdownMenu aria-labelledby="action">
-                  <button ngbDropdownItem (click)="editHandler(article.slug!)">Edit</button>
+                  <button ngbDropdownItem (click)="editHandler(article.slug!)">
+                    Edit
+                  </button>
                   <button
                     ngbDropdownItem
                     (click)="deleteHandler(confrimModal, article.slug)"
@@ -63,7 +65,7 @@
         [collectionSize]="collectionSize"
         [(page)]="page"
         [pageSize]="pageSize"
-        (pageChange)="refreshArticles()"
+        (pageChange)="refreshPagination()"
       >
       </ngb-pagination>
     </div>

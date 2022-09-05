@@ -20,6 +20,7 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
   pageSize = 10;
   collectionSize = 0;
   articles: ArticleDto[] = [];
+  datasource: ArticleDto[] = [];
 
   constructor(
     private articleService: ArticleService,
@@ -29,31 +30,35 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.refreshArticles();
+    this.loadArticles();
   }
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
-  refreshArticles() {
-    const query: PaginationDto = { limit: 20 };
+  loadArticles() {
+    const query: PaginationDto = { limit: 100 };
     this.articleService
       .AllArticles(query)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((result) => {
         this.collectionSize = result.articlesCount;
-        this.articles = result.articles
-          .map((article, i) => ({
-            id: i + 1,
-            ...article,
-          }))
-          .slice(
-            (this.page - 1) * this.pageSize,
-            (this.page - 1) * this.pageSize + this.pageSize
-          );
-        //TODO : Pagination with url and offset
+        this.articles = result.articles;
+        this.refreshPagination();
       });
+  }
+
+  refreshPagination() {
+    this.datasource = this.articles
+      .map((article, i) => ({
+        id: i + 1,
+        ...article,
+      }))
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
   }
 
   editHandler(slug: string) {
