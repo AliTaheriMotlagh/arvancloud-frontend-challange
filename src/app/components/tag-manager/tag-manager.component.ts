@@ -1,5 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { ArticleService } from 'src/app/services';
 
 @Component({
@@ -7,7 +14,8 @@ import { ArticleService } from 'src/app/services';
   templateUrl: './tag-manager.component.html',
   styleUrls: ['./tag-manager.component.scss'],
 })
-export class TagManagerComponent implements OnInit {
+export class TagManagerComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
   form = this.fb.group({
     newTag: [''],
   });
@@ -25,11 +33,18 @@ export class TagManagerComponent implements OnInit {
   ngOnInit(): void {
     this.getAllTags();
   }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
   getAllTags() {
-    this.articleService.AllTags().subscribe((result) => {
-      this.list = result.tags.sort();
-    });
+    this.articleService
+      .AllTags()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((result) => {
+        this.list = result.tags.sort();
+      });
   }
 
   addNewTag() {
@@ -58,5 +73,4 @@ export class TagManagerComponent implements OnInit {
   isSelect(tag: string) {
     return this.selectedTags.find((i) => i === tag);
   }
-
 }
