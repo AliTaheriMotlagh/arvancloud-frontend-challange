@@ -19,7 +19,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        debugger;
         if (error.error.errors) {
           for (const key in error.error.errors) {
             if (Object.prototype.hasOwnProperty.call(error.error.errors, key)) {

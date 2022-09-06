@@ -13,12 +13,7 @@
               id="title"
               formControlName="title"
               placeholder="Title"
-              [ngClass]="
-                (form.controls.title.touched || form.controls.title.dirty) &&
-                form.controls.title.hasError('required')
-                  ? 'is-invalid'
-                  : ''
-              "
+              [ngClass]="titleValidationClass"
             />
             <div class="invalid-feedback">
               {{
@@ -34,13 +29,7 @@
               id="description"
               formControlName="description"
               placeholder="Description"
-              [ngClass]="
-                (form.controls.description.touched ||
-                  form.controls.description.dirty) &&
-                form.controls.description.hasError('required')
-                  ? 'is-invalid'
-                  : ''
-              "
+              [ngClass]="descriptionValidationClass"
             />
             <div class="invalid-feedback">
               {{
@@ -58,12 +47,7 @@
               id="body"
               formControlName="body"
               placeholder="Body"
-              [ngClass]="
-                (form.controls.body.touched || form.controls.body.dirty) &&
-                form.controls.body.hasError('required')
-                  ? 'is-invalid'
-                  : ''
-              "
+              [ngClass]="bodyValidationClass"
             ></textarea>
             <div class="invalid-feedback">
               {{

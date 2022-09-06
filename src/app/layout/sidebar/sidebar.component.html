@@ -1,0 +1,13 @@
+<div id="sidebar">
+  <nav>
+    <ul
+      ngbNav
+      class="nav-pills"
+      orientation="vertical"
+    >
+      <li [ngbNavItem]="link.link" *ngFor="let link of links$ | async">
+        <a ngbNavLink [routerLink]="link.link"  routerLinkActive="active">{{ link.title }}</a>
+      </li>
+    </ul>
+  </nav>
+</div>

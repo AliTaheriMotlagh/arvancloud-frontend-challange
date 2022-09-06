@@ -8,14 +8,7 @@
         class="form-control"
         id="email"
         formControlName="email"
-        [ngClass]="
-          (form.controls.email.touched || form.controls.email.dirty) &&
-          form.controls.email.hasError('required')
-            ? 'is-invalid'
-            : '' || form.controls.email.hasError('email')
-            ? 'is-invalid'
-            : ''
-        "
+        [ngClass]="emailValidationClass"
       />
       <div class="invalid-feedback">
         {{ form.controls.email.hasError("required") ? "Required field" : "" }}
@@ -29,12 +22,7 @@
         class="form-control"
         id="password"
         formControlName="password"
-        [ngClass]="
-          (form.controls.password.touched || form.controls.password.dirty) &&
-          form.controls.password.hasError('required')
-            ? 'is-invalid'
-            : ''
-        "
+        [ngClass]="passwordValidationClass"
       />
       <div class="invalid-feedback">
         {{

@@ -1,19 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { RegisterDto } from 'src/app/dto';
+import { LoginDto } from 'src/app/dto';
 import { AuthService, NavigationService } from 'src/app/services';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
-
   form = this.fb.group({
-    username: [''],
     email: ['', [Validators.email]],
     password: ['', Validators.required],
   });
@@ -26,18 +24,35 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private auth: AuthService
   ) {}
 
+  get passwordValidationClass() {
+    return (this.form.controls.password.touched ||
+      this.form.controls.password.dirty) &&
+      this.form.controls.password.hasError('required')
+      ? 'is-invalid'
+      : '';
+  }
+  get emailValidationClass() {
+    return (this.form.controls.email.touched ||
+      this.form.controls.email.dirty) &&
+      this.form.controls.email.hasError('required')
+      ? 'is-invalid'
+      : '' || this.form.controls.email.hasError('email')
+      ? 'is-invalid'
+      : '';
+  }
+
   ngOnInit(): void {}
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
-  register() {
+  login() {
     if (this.form.valid) {
       this.isLoading = true;
-      const dto: RegisterDto = { user: this.form.getRawValue() };
+      const dto: LoginDto = { user: this.form.getRawValue() };
       this.auth
-        .Register(dto)
+        .Login(dto)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
           (result) => {
@@ -51,7 +66,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToLogin() {
-    this.navigation.GoToLogin();
+  goToRegister() {
+    this.navigation.GoToRegister();
   }
 }

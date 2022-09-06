@@ -38,6 +38,29 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
 
+  get titleValidationClass() {
+    return (this.form.controls.title.touched ||
+      this.form.controls.title.dirty) &&
+      this.form.controls.title.hasError('required')
+      ? 'is-invalid'
+      : '';
+  }
+
+  get descriptionValidationClass() {
+    return (this.form.controls.description.touched ||
+      this.form.controls.description.dirty) &&
+      this.form.controls.description.hasError('required')
+      ? 'is-invalid'
+      : '';
+  }
+
+  get bodyValidationClass() {
+    return (this.form.controls.body.touched || this.form.controls.body.dirty) &&
+      this.form.controls.body.hasError('required')
+      ? 'is-invalid'
+      : '';
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.slug = params.get('slug')!;
