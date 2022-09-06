@@ -13,22 +13,20 @@ import { NotificationService } from '../services';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private notif: NotificationService) {}
 
-  getEerorMessage(errors: any): string {
-    //TODO: list of error
-    return `${Object.keys(errors)[0]} ${errors[Object.keys(errors)[0]]}`;
-  }
-
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        debugger;
         if (error.error.errors) {
-          this.notif.OpenError(
-            this.getEerorMessage(error.error.errors),
-            error.error.status
-          );
+          for (const key in error.error.errors) {
+            if (Object.prototype.hasOwnProperty.call(error.error.errors, key)) {
+              const element = error.error.errors[key];
+              this.notif.OpenError(`${key} ${element}`);
+            }
+          }
         }
 
         if (error.error.message) {

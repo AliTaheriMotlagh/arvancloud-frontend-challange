@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +11,9 @@ export class DashboardComponent implements OnInit {
     { title: 'All Articles', link: 'articles' },
     { title: 'New Article', link: 'articles/create' },
   ];
-  currentUrl = '';
 
-  constructor(public router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.currentUrl = this.router.url.replace('/dashboard/', '');
   }
 }

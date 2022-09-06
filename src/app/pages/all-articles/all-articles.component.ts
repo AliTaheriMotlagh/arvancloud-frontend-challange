@@ -41,7 +41,7 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
   }
 
   loadArticles() {
-    const query: PaginationDto = { limit: 100 };
+    const query: PaginationDto = { limit: 100 }; // TODO : For api limitation i cant predicte how much item we have
     this.articleService
       .AllArticles(query)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -63,12 +63,8 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
-
     this.navigate.GoToArticleByPage(this.page);
-    // TODO : page 1 = /articles and 2 api call
   }
-
-  goToPage(page: number) {}
 
   editHandler(slug: string) {
     return this.navigate.GoToArticleBySlug(slug);
@@ -91,7 +87,7 @@ export class AllArticlesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((result) => {
         this.notif.OpenSuccess('Article deleted successfuly');
-        this.articles = this.articles.filter((i) => i.slug !== slug);
+        this.datasource = this.datasource.filter((i) => i.slug !== slug);
       });
   }
 }

@@ -5,12 +5,11 @@
       <nav>
         <ul
           ngbNav
-          [activeId]="currentUrl"
           class="nav-pills"
           orientation="vertical"
         >
           <li [ngbNavItem]="link.link" *ngFor="let link of links">
-            <a ngbNavLink [routerLink]="link.link">{{ link.title }}</a>
+            <a ngbNavLink [routerLink]="link.link"  routerLinkActive="active">{{ link.title }}</a>
           </li>
         </ul>
       </nav>

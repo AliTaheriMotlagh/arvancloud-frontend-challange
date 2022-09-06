@@ -26,12 +26,16 @@ export class NavigationService {
     ]);
   }
   GoToArticleByPage(page: number) {
-    return this.router.navigate([
-      '/',
-      'dashboard',
-      'articles',
-      'page',
-      `${page}`,
-    ]);
+    if (page == 1) {
+      return this.GoToDashboard();
+    } else {
+      return this.router.navigate([
+        '/',
+        'dashboard',
+        'articles',
+        'page',
+        `${page}`,
+      ]);
+    }
   }
 }
